@@ -1,0 +1,7 @@
+https://dl.google.com/coral/python/tflite_runtime-2.1.0-cp36-cp36m-linux_armv7l.whl
+Pillow
+numpy
+Flask
+requests
+namegenerator
+paho-mqtt
