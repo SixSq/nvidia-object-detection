@@ -26,9 +26,9 @@ RUN pip3 --no-cache-dir install \
         matplotlib ipykernel Pillow paho-mqtt jupyter && \
         python3 -m ipykernel.kernelspec
 
-ADD tensorflow-1.14.0-cp37-cp37m-linux_armv7l.whl ./
+RUN curl -L https://github.com/lherman-cs/tensorflow-aarch64/releases/download/r1.4/tensorflow-1.4.0rc0-cp35-cp35m-linux_aarch64.whl > /tmp/tensorflow-1.4.0rc0-cp35-cp35m-linux_aarch64.whl
 
-RUN pip3 install tensorflow
+RUN pip3 install /tmp/tensorflow-1.4.0rc0-cp35-cp35m-linux_aarch64.whl
 
 WORKDIR /GPUTest
 # COPY /requirements.txt ./
