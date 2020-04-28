@@ -26,9 +26,7 @@ RUN pip3 --no-cache-dir install \
         matplotlib ipykernel Pillow paho-mqtt jupyter && \
         python3 -m ipykernel.kernelspec
 
-RUN curl -L https://github.com/lherman-cs/tensorflow-aarch64/releases/download/r1.4/tensorflow-1.4.0rc0-cp35-cp35m-linux_aarch64.whl > /tmp/tensorflow-1.4.0rc0-cp35-cp35m-linux_aarch64.whl
-
-RUN pip3 install /tmp/tensorflow-1.4.0rc0-cp35-cp35m-linux_aarch64.whl
+RUN pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v43 tensorflow
 
 WORKDIR /GPUTest
 # COPY /requirements.txt ./
