@@ -23,7 +23,7 @@ RUN  apt-get clean && \
         rm -rf /var/lib/apt/lists/*
 
 RUN pip3 --no-cache-dir install \
-        matplotlib ipykernel Pillow paho-mqtt jupyter && \
+        matplotlib ipykernel Pillow paho-mqtt jupyter termcolor && \
         python3 -m ipykernel.kernelspec
 
 RUN pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v43 tensorflow
