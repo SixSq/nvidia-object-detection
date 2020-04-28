@@ -1,4 +1,6 @@
-FROM arm32v7/python:3.7
+FROM ubuntu:18.04
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
@@ -32,6 +34,7 @@ RUN pip install tensorflow-1.14.0-cp37-cp37m-linux_armv7l.whl
 
 WORKDIR /GPUTest
 # COPY /requirements.txt ./
+
 
 
 COPY ./ ./
