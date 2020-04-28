@@ -22,7 +22,7 @@ RUN  apt-get clean && \
 
 RUN pip3 --no-cache-dir install \
         matplotlib ipykernel Pillow paho-mqtt jupyter && \
-        python -m ipykernel.kernelspec
+        python3 -m ipykernel.kernelspec
 
 ADD tensorflow-1.14.0-cp37-cp37m-linux_armv7l.whl ./
 
