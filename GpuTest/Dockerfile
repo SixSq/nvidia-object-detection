@@ -28,7 +28,7 @@ RUN pip3 --no-cache-dir install \
 
 ADD tensorflow-1.14.0-cp37-cp37m-linux_armv7l.whl ./
 
-RUN pip3 install tensorflow-1.14.0-cp37-cp37m-linux_armv7l.whl
+RUN pip3 install tensorflow
 
 WORKDIR /GPUTest
 # COPY /requirements.txt ./
