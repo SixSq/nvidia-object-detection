@@ -12,15 +12,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python3-numpy \
         python3-scipy \
         python3-opencv \
+        python3-pip \
         rsync \
         unzip
 
 RUN  apt-get clean && \
         rm -rf /var/lib/apt/lists/*
-
-RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py && \
-        rm get-pip.py
 
 RUN pip --no-cache-dir install \
         matplotlib ipykernel Pillow paho-mqtt jupyter && \
@@ -32,7 +29,6 @@ RUN pip install tensorflow-1.14.0-cp37-cp37m-linux_armv7l.whl
 
 WORKDIR /GPUTest
 # COPY /requirements.txt ./
-
 
 COPY ./ ./
 
