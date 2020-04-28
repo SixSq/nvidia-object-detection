@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python3-scipy \
         python3-opencv \
         python3-pip \
+        python3-setuptools \
         rsync \
         unzip
 
