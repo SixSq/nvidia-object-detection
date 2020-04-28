@@ -33,4 +33,4 @@ WORKDIR /GPUTest
 
 COPY ./ ./
 
-CMD ["python", "gpuTest.py"]
+CMD ["python3", "gpuTest.py"]
