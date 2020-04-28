@@ -1,4 +1,6 @@
-FROM arm32v7/python:3.7
+FROM ubuntu:18.04
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
@@ -34,3 +36,4 @@ WORKDIR /GPUTest
 COPY ./ ./
 
 CMD ["python3", "gpuTest.py"]
+
