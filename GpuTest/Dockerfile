@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libpng-dev \
         libzmq3-dev \
         pkg-config \
+        python3 \
         python3-dev \
         python3-numpy \
         python3-scipy \
@@ -22,11 +23,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN  apt-get clean && \
         rm -rf /var/lib/apt/lists/*
 
-RUN pip3 --no-cache-dir install \
-        matplotlib ipykernel Pillow paho-mqtt jupyter termcolor keras-application && \
-        python3 -m ipykernel.kernelspec
+RUN wget https://nvidia.box.com/shared/static/ncgzus5o23uck9i5oth2n8n06k340l6k.whl -O torch-1.4.0-cp36-cp36m-linux_aarch64.whl 
 
-RUN pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v43 tensorflow
+RUN apt-get install python3-pip libopenblas-base libopenmpi-dev 
+
+RUN pip3 --no-cache-dir install \
+        matplotlib cython ipykernel Pillow paho-mqtt jupyter termcolor keras-application numpy torch-1.4.0-cp36-cp36m-linux_aarch64.whl 
 
 WORKDIR /GPUTest
 # COPY /requirements.txt ./
