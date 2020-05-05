@@ -25,7 +25,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN wget https://nvidia.box.com/shared/static/ncgzus5o23uck9i5oth2n8n06k340l6k.whl -O torch-1.4.0-cp36-cp36m-linux_aarch64.whl 
 
-RUN pip3 --no-cache-dir install --upgrade numpy setuptools cython torch-1.4.0-cp36-cp36m-linux_aarch64.whl 
+RUN pip3 --no-cache-dir install setuptools cython torch-1.4.0-cp36-cp36m-linux_aarch64.whl 
+
+RUN pip3 install --upgrade numpy
 
 WORKDIR /GPUTest
 # COPY /requirements.txt ./
