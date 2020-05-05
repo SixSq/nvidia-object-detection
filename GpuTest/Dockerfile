@@ -21,9 +21,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         wget \
         unzip
 
-RUN  apt-get clean && \
-        rm -rf /var/lib/apt/lists/*
-
 RUN wget https://nvidia.box.com/shared/static/ncgzus5o23uck9i5oth2n8n06k340l6k.whl -O torch-1.4.0-cp36-cp36m-linux_aarch64.whl 
 
 RUN apt-get install python3-pip libopenblas-base libopenmpi-dev 
