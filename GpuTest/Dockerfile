@@ -25,8 +25,7 @@ RUN wget https://nvidia.box.com/shared/static/ncgzus5o23uck9i5oth2n8n06k340l6k.w
 
 RUN apt-get install python3-pip libopenblas-base libopenmpi-dev -y
 
-RUN pip3 --no-cache-dir install \
-        matplotlib cython ipykernel Pillow paho-mqtt jupyter termcolor keras-application numpy torch-1.4.0-cp36-cp36m-linux_aarch64.whl 
+RUN pip3 --no-cache-dir install cython numpy torch-1.4.0-cp36-cp36m-linux_aarch64.whl 
 
 WORKDIR /GPUTest
 # COPY /requirements.txt ./
