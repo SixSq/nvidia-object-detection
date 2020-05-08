@@ -15,7 +15,7 @@ RUN pip3 install --no-cache-dir absl-py
 RUN pip3 install --default-timeout=3000 --no-cache-dir tensorflow 
 RUN pip3 install --default-timeout=3000 ipython==7.7.0 
 
-RUN pip3 install --default-timeout=3000 --no-cache-dir pillow lxml jupyter matplotlib cython flask_opencv_streamer 
+RUN pip3 install --default-timeout=3000 --no-cache-dir pillow lxml jupyter matplotlib numpy cython flask_opencv_streamer 
 
 RUN mkdir -p /tensorflow1
 
