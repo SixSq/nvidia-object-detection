@@ -1,38 +1,8 @@
-FROM raspbian/stretch
-
-RUN apt-get update && yes | apt-get upgrade
-
-RUN apt-get install -y --no-install-recommends libatlas-base-dev python3 \
-			python3-dev python3-pip python3-setuptools \
-			python-tk libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev \
-			libavcodec-dev libfreetype6-dev libavformat-dev libswscale-dev libv4l-dev \
-			libxvidcore-dev libx264-dev libpng-dev qt4-dev-tools protobuf-compiler \
-			libilmbase-dev libopenexr-dev libgstreamer1.0-dev libqt4-test && \
-	apt-get clean && \
- 	rm -rf /var/lib/apt/lists/*
- 
-RUN pip3 install --no-cache-dir absl-py
-RUN pip3 install --default-timeout=3000 ipython==7.7.0 
-
-RUN pip3 install --default-timeout=3000 --no-cache-dir pillow lxml jupyter matplotlib numpy cython flask_opencv_streamer 
-
-RUN mkdir -p /tensorflow1
-
-COPY models/ /tensorflow1/models
-
-ENV PYTHONPATH $PYTHONPATH:/tensorflow1/models/research:/tensorflow1/models/research/slim
-
-RUN cd /tensorflow1/models/research &&  protoc object_detection/protos/*.proto --python_out=.
-
-WORKDIR /tensorflow1/models/research/object_detection
-
-RUN wget http://download.tensorflow.org/models/object_detection/ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz && \
-	tar -xzvf ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz
-
-RUN mkdir -p templates
-
-COPY templates templates
-COPY gpuTest.py .
-
-CMD ["python3", "gpuTest.py"]
-
+FROM nvcr.io/nvidia/l4t-base:r32.2
+WORKDIR /
+RUN apt update && apt install -y --fix-missing make g++
+RUN apt update && apt install -y --fix-missing python3-pip libhdf5-serial-dev hdf5-tools
+RUN apt update && apt install -y python3-h5py
+RUN pip3 install --pre --no-cache-dir --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu
+RUN pip3 install -U numpy
+CMD [ "bash" ]
