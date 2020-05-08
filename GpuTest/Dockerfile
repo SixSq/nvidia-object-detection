@@ -6,7 +6,7 @@ RUN apt-get install -y --no-install-recommends libatlas-base-dev python3 \
 			python3-dev python3-pip python3-setuptools \
 			python-tk libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev \
 			libavcodec-dev libfreetype6-dev libavformat-dev libswscale-dev libv4l-dev \
-			libxvidcore-dev libx264-dev qt4-dev-tools protobuf-compiler \
+			libxvidcore-dev libx264-dev libpng-dev qt4-dev-tools protobuf-compiler \
 			libilmbase-dev libopenexr-dev libgstreamer1.0-dev libqt4-test && \
 	apt-get clean && \
  	rm -rf /var/lib/apt/lists/*
