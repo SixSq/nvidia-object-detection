@@ -12,7 +12,6 @@ RUN apt-get install -y --no-install-recommends libatlas-base-dev python3 \
  	rm -rf /var/lib/apt/lists/*
  
 RUN pip3 install --no-cache-dir absl-py
-RUN pip3 install --default-timeout=3000 --no-cache-dir tensorflow 
 RUN pip3 install --default-timeout=3000 ipython==7.7.0 
 
 RUN pip3 install --default-timeout=3000 --no-cache-dir pillow lxml jupyter matplotlib numpy cython flask_opencv_streamer 
