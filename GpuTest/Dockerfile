@@ -6,13 +6,12 @@ RUN apt update && apt install -y --fix-missing make g++ git
 RUN apt update && apt install -y --fix-missing python3-pip libhdf5-serial-dev hdf5-tools
 
 
-RUN git clone https://github.com/pjreddie/darknet && cd darknet 
+RUN git clone https://github.com/pjreddie/darknet && cd darknet && mkdir weights && cd weights && wget https://pjreddie.com/media/files/yolov3-tiny.weights
 
-COPY Makefile .
+COPY Makefile ./darknet
 
-RUN mkdir weights && cd weights
-RUN wget https://pjreddie.com/media/files/yolov3-tiny.weights
+COPY darknetInstall.sh .
 
 RUN cd ..
 
-CMD ['bash']
+CMD ["bash"]
