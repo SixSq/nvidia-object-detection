@@ -10,9 +10,6 @@ RUN git clone https://github.com/pjreddie/darknet && cd darknet
 
 COPY Makefile .
 
-RUN make
-
-
 RUN mkdir weights && cd weights
 RUN wget https://pjreddie.com/media/files/yolov3-tiny.weights
 
