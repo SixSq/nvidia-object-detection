@@ -14,4 +14,4 @@ COPY darknetInstall.sh .
 
 RUN cd ..
 
-CMD ["bash"]
+CMD ["./darknetInstall.sh"]
