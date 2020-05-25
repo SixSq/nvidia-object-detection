@@ -25,12 +25,14 @@ def video():
 @app.route('/mjpeg')
 def mjpeg():
     """Video streaming route. Put this in the src attribute of an img tag."""
+    print('fui chamado')
     return Response(imageGenerator(),
                     mimetype='multipart/x-mixed-replace; boundary=frame',
                     direct_passthrough=True)
 
 @app.route('/jpeg')
 def jpeg():
+    print('return of the king')
     return Response(imageGenerator(),
                     mimetype='image/jpeg',
                     direct_passthrough=True)
