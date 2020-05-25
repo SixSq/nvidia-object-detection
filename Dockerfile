@@ -23,7 +23,7 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
         rm get-pip.py
 
 RUN pip3 --no-cache-dir install \
-        matplotlib ipykernel Pillow paho-mqtt jupyter && \
+        matplotlib ipykernel Pillow paho-mqtt flask jupyter && \
         python -m ipykernel.kernelspec
 
 ADD tensorflow-1.14.0-cp37-cp37m-linux_armv7l.whl ./
