@@ -5,9 +5,8 @@ import numpy as np
 def imageGenerator():
     cap = cv2.VideoCapture(1)
     ret, frame = cap.read()
-    yield (frame.tobytes())
-    # yield (b'--frame\r\n'
-    #     b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    yield (b'--frame\r\n'
+        b'Content-Type: image/jpeg\r\n\r\n' + frame.tobytes() + b'\r\n')
 
 
 if __name__ == "__main__":
