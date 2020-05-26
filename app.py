@@ -35,6 +35,18 @@ def jpeg():
                     mimetype='image/jpeg',
                     direct_passthrough=True)
 
+@app.route('/yolo', methods=['GET', 'POST'])
+def upload():
+ if request.method == 'POST':
+        
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+
+        file = request.files['file']
+        print(file)
+
 def get_argument_parser():
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument('--help', action='help', help='show this help message and exit')
