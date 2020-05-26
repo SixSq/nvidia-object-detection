@@ -7,6 +7,7 @@
     <body>
       <h1>Docker GPU Demo</h1>
       <input type="file" id="myFile">
+
       <button onclick="myFunction()">Send</button>
       
       <img id="image" src="" />
@@ -26,8 +27,8 @@
           
         $(document).ready(function() {
           var image = $("#image");
-          image.on("load", function(){refresh()});
-          refresh(true);
+          // image.on("load", function(){refresh()});
+          // refresh(true);
         });
       </script>
     </body>
