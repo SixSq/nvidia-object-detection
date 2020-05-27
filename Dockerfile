@@ -1,39 +1,26 @@
-FROM arm32v7/python:3.7
+FROM nvcr.io/nvidia/l4t-base:r32.2
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        build-essential \
-        curl \
-        libfreetype6-dev \
-        libhdf5-dev \
-        libpng-dev \
-        libzmq3-dev \
-        pkg-config \
-        python3-dev \
-        python3-numpy \
-        python3-scipy \
-        python3-opencv \
-        rsync \
-        unzip
+WORKDIR /
 
-RUN  apt-get clean && \
-        rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y --fix-missing make g++ git
+RUN apt update && apt install -y --fix-missing python3-pip libhdf5-serial-dev hdf5-tools
+RUN apt install python3-opencv
+RUN pip3 install flask
 
-RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py && \
-        rm get-pip.py
+RUN git clone https://github.com/pjreddie/darknet && cd darknet && mkdir weights && cd weights && wget https://pjreddie.com/media/files/yolov3-tiny.weights
 
-RUN pip3 --no-cache-dir install \
-        matplotlib ipykernel Pillow paho-mqtt flask jupyter && \
-        python -m ipykernel.kernelspec
+COPY Makefile ./darknet
 
-ADD tensorflow-1.14.0-cp37-cp37m-linux_armv7l.whl ./
+COPY darknetInstall.sh ./darknet
 
-RUN pip3 install tensorflow-1.14.0-cp37-cp37m-linux_armv7l.whl
+COPY app.py .
 
-WORKDIR /Classifier
-# COPY /requirements.txt ./
+COPY ./templates .
 
+COPY ./static .
 
-COPY ./ ./
+COPY camera2.py .
 
-CMD ["python", "predict.py"]
+RUN ./darknetInstall.sh
+
+CMD ["bash"]

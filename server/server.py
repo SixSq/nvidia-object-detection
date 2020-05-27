@@ -32,9 +32,8 @@ def upload_yolo():
             return redirect(url_for('uploaded_file',
                                     filename=filename))
     
-    ouputImagePath = 
 
-    return send_file(outputImagePath, mimetype='image/gif')
+    return 'Not Valid'
 
 if __name__ == '__main__':
     if not os.path.isdir(UPLOAD_FOLDER):
