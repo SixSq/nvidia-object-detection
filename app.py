@@ -66,7 +66,7 @@ def upload():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            run = './Darknet/darknet detect /Darknet/cfg/yolov3-tiny.cfg /Darknet/weights/yolov3-tiny.weights ./{}'.format(filename)
+            run = './darknet/darknet detect /darknet/cfg/yolov3-tiny.cfg /darknet/weights/yolov3-tiny.weights ./{}'.format(filename)
             prog = subprocess.Popen(run, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
             return redirect(url_for('upload',
