@@ -4,6 +4,7 @@
 import os
 import sys
 import argparse
+import subprocess
 
 from flask import Flask, render_template, Response, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
@@ -65,6 +66,10 @@ def upload():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            run = './Darknet/darknet detect /Darknet/cfg/yolov3-tiny.cfg /Darknet/weights/yolov3-tiny.weights ./{}'.format(filename)
+'
+            prog = subprocess.Popen(run, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            
             return redirect(url_for('upload',
                                     filename=filename))
 
