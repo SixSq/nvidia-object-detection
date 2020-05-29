@@ -18,9 +18,9 @@ COPY darknetInstall.sh ./darknet
 
 COPY app.py .
 
-ADD templates .
+ADD templates ./templates
 
-ADD static .
+ADD static ./static
 
 COPY camera2.py .
 
