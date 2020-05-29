@@ -24,6 +24,6 @@ COPY ./static .
 
 COPY camera2.py .
 
-RUN ./darknet/darknetInstall.sh
+# RUN ./darknet/darknetInstall.sh
 
 CMD ["bash"]
