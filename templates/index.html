@@ -1,0 +1,84 @@
+
+<html>
+    <head>
+      <title>Docker GPU Demo</title>
+      <script src="{{ url_for('static', filename='jquery-3.0.0.min.js') }}" type="text/javascript"></script>
+    </head>
+    <body>
+      <h1>Docker GPU Demo</h1>
+      <input type="file" id="myFile">
+
+      <button onclick="myFunction()">Send</button>
+      
+      <img id="image" src="" />
+
+      <script type="text/javascript">
+        cnt = 0;
+  
+        function refresh() {
+          var image = $("#image");
+          image.attr("src", "{{ url_for('jpeg') }}?c="+(cnt++));
+        }
+
+
+
+        function myFunction() {
+          var x = document.getElementById("myFile");
+          console.log(x)
+          var file = x.files[0];
+          console.log(file)
+
+          var formData = new FormData();
+
+          // add assoc key values, this will be posts values
+          formData.append("file", file, file.name);
+
+          $.ajax({
+              type: "POST",
+              url: "/upload",
+              xhr: function () {
+                  var myXhr = $.ajaxSettings.xhr();
+                  // if (myXhr.upload) {
+                  //     myXhr.upload.addEventListener('progress', progressHandling, false);
+                  // }
+                  return myXhr;
+              },
+              success: function (data) {
+                  console.log(data)
+                  // your callback here
+              },
+              error: function (error) {
+                  // handle error
+                  console.log(error.statusText)
+              },
+              async: true,
+              data: formData,
+              cache: false,
+              contentType: false,
+              processData: false,
+              timeout: 60000
+          });
+
+        }
+        
+      //   this.prototype.progressHandling = function (event) {
+      //     var percent = 0;
+      //     var position = event.loaded || event.position;
+      //     var total = event.total;
+      //     var progress_bar_id = "#progress-wrp";
+      //     if (event.lengthComputable) {
+      //         percent = Math.ceil(position / total * 100);
+      //     }
+      //     // update progressbars classes so it fits your code
+      //     $(progress_bar_id + " .progress-bar").css("width", +percent + "%");
+      //     $(progress_bar_id + " .status").text(percent + "%");
+      // };
+
+        $(document).ready(function() {
+          var image = $("#image");
+          // image.on("load", function(){refresh()});
+          // refresh(true);
+        });
+      </script>
+    </body>
+  </html>
