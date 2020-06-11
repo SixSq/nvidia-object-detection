@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def run_yolo(path):
-
+    pass
 
 @app.route('/yolo', methods=['GET', 'POST'])
 def upload_yolo():
