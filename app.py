@@ -69,7 +69,7 @@ def upload():
             file.save(filepath)
             run = ['./darknet/darknet','detect' ,'/darknet/cfg/yolov3-tiny.cfg', '/darknet/weights/yolov3-tiny.weights', filepath]
             print('Starting YOLO')
-            prog = subprocess.call(run, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            prog = subprocess.run(run, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             prog.wait()
             print('YOLO FINISHED')
             print(prog)
