@@ -1,81 +1,58 @@
-import numpy as np
-import tempfile
-import uuid
-from PIL import Image
-# import matplotlib.pyplot as plt
-from tensorflow import keras
+# coding:utf-8
 
-def createTempFilepath():
-    return '/tmp/{}.png'.format(str(uuid.uuid4()))
+import weakref
+import threading
 
-def arrayToImage(array, filepath=None):
-    if filepath == None:
-      filepath = createTempFilepath()
-    img = Image.fromarray(array, 'P')
-    img.save(filepath)
-    return filepath
+try:
+    import queue
+except ImportError:
+    import Queue as queue # Python 2
 
-def imageToArray(filepath):
-    im = Image.open(filepath)
-    np_im = np.array(im)
-    return np_im
 
-def showImage(path):
-    img = Image.open(path)
-    img = img.resize((200,200))
-    img.show()
+class Singleton(type):
+    ''' This class is meant to be used as a metaclass to transform a class into a singleton '''
 
-def makeImages():
-  fashion_mnist = keras.datasets.fashion_mnist
-  test_images = fashion_mnist.load_data()[1][0]
+    _instances = weakref.WeakValueDictionary()
+    _singleton_lock = threading.Lock()
 
-  for i, v in enumerate(test_images[:100]):
-      arrayToImage(v, './savedImages/{}.png'.format(i))
+    def __call__(cls, *args, **kwargs):
+        with cls._singleton_lock:
+            if cls not in cls._instances:
+                instance = super(Singleton, cls).__call__(*args, **kwargs)
+                cls._instances[cls] = instance
+                return instance
+            return cls._instances[cls]
 
-# def plot_image(i, predictions_array, true_label, img, class_names):
-#   print("Entered plot image")
-#   predictions_array, true_label, img = predictions_array, true_label[i], img[i]
-#   plt.grid(False)
-#   plt.xticks([])
-#   plt.yticks([])
 
-#   plt.imshow(img)
+class RenewQueue(queue.Queue, object):
+    ''' A queue which can contain only one element.
+        When an item is put into the queue it will replace the existing one if any. '''
 
-#   predicted_label = np.argmax(predictions_array)
-#   if predicted_label == true_label:
-#     color = 'blue'
-#   else:
-#     color = 'red'
+    def __init__(self):
+        super(RenewQueue, self).__init__(maxsize=1)
+        self.put_super = super(RenewQueue, self).put
+        self.get_super = super(RenewQueue, self).get
+        self._lock = threading.Lock()
 
-#   plt.xlabel("{} {:2.0f}% ({})".format(class_names[predicted_label],
-#                                 100*np.max(predictions_array),
-#                                 class_names[true_label]),
-#                                 color=color)
+    def put(self, item):
+        with self._lock:
+            try:
+                self.put_super(item, False)
+            except queue.Full:
+                self.get_super(False)
+                self.put_super(item, False)
 
-# def plot_value_array(i, predictions_array, true_label):
-#   print('entered plot value array')
-#   predictions_array, true_label = predictions_array, true_label[i]
-#   plt.grid(False)
-#   plt.xticks(range(10))
-#   plt.yticks([])
-#   thisplot = plt.bar(range(10), predictions_array, color="#777777")
-#   plt.ylim([0, 1])
-#   predicted_label = np.argmax(predictions_array)
-
-#   thisplot[predicted_label].set_color('red')
-#   thisplot[true_label].set_color('blue')
-#   print('exited plot value array')
-
-# def createModelAccuracyRepresentation(predictions, test_labels, test_images, class_names):
-#     print('Entered Model Representation')
-#     num_rows = 5
-#     num_cols = 3
-#     num_images = num_rows*num_cols
-#     plt.figure(figsize=(2*2*num_cols, 2*num_rows))
-#     for i in range(num_images):
-#         plt.subplot(num_rows, 2*num_cols, 2*i+1)
-#         plot_image(i, predictions[i], test_labels, test_images, class_names)
-#         plt.subplot(num_rows, 2*num_cols, 2*i+2)
-#         plot_value_array(i, predictions[i], test_labels)
-#     plt.tight_layout()
-#     plt.show()
+    def get(self, block=True, timeout=None):
+        self._lock.acquire()
+        acquired = True
+        try:
+            return self.get_super(False, timeout)
+        except queue.Empty:
+            self._lock.release()
+            acquired = False
+            if not block:
+                raise
+            return self.get_super(True, timeout)
+        finally:
+            if acquired:
+                self._lock.release()
