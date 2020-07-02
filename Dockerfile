@@ -22,8 +22,6 @@ ADD templates ./templates
 
 ADD static ./static
 
-COPY camera2.py .
-
 RUN ./darknetInstall.sh
 
 CMD ["bash"]
