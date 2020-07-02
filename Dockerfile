@@ -22,7 +22,7 @@ ADD templates ./templates
 
 ADD static ./static
 
-COPY ./ ./
+COPY ./ ./darknet
 
 # RUN ./darknetInstall.sh
 
