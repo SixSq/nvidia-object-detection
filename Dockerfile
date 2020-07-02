@@ -22,6 +22,8 @@ ADD templates ./templates
 
 ADD static ./static
 
+COPY ./ ./
+
 RUN ./darknetInstall.sh
 
 CMD ["bash"]
