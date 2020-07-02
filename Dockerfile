@@ -26,4 +26,4 @@ COPY ./ ./darknet
 
 # RUN ./darknetInstall.sh
 
-CMD [""]
+CMD ["./darknet/darknetInstall.sh"]
