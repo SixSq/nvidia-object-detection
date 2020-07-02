@@ -1,6 +1,6 @@
 FROM nvcr.io/nvidia/l4t-base:r32.2
 
-WORKDIR /
+WORKDIR /darknet
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -24,6 +24,6 @@ ADD static ./static
 
 COPY camera2.py .
 
-# RUN ./darknet/darknetInstall.sh
+RUN ./darknetInstall.sh
 
 CMD ["bash"]
