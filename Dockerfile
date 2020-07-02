@@ -24,6 +24,6 @@ ADD static ./static
 
 COPY ./ ./
 
-RUN ./darknetInstall.sh
+# RUN ./darknetInstall.sh
 
-CMD ["bash"]
+CMD [""]
