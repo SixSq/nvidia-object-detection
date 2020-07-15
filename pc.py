@@ -43,7 +43,7 @@ class PersonCounter(object):
         if algorithm_params:
             self.params.update(algorithm_params)
 
-        self.cap = cv2.VideoCapture(self.input_source);    # open the video stream from a file a device or
+        self.cap = cv2.VideoCapture(self.input_ source);    # open the video stream from a file a device or
 
         if width:
             self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
@@ -281,7 +281,7 @@ Output:
 
         inputImage = cv2.imwrite("input.jpg",  frame)
 
-        run = ['./darknet','detect', 'cfg/yolov3-tiny.cfg', 'yolov3-tiny.weights', "input.jpg"]
+        run = ['./darknet','detect', 'cfg/yolov3-tiny.cfg', 'weights/yolov3-tiny.weights', "input.jpg"]
         
         prog = subprocess.run(run, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
