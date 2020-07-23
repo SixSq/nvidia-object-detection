@@ -90,7 +90,7 @@ def main():
     for k,v in parameters.items():
         print('{}: {}'.format(k, v))
 
-    app.run(host='0.0.0.0', debug=False, threaded=True)
+    app.run(host='0.0.0.0', port='8000', debug=False, threaded=True)
 
 if __name__ == '__main__':
     main()
