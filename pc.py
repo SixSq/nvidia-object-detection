@@ -43,7 +43,7 @@ class PersonCounter(object):
         if algorithm_params:
             self.params.update(algorithm_params)
 
-        self.cap = cv2.VideoCapture(self.input_ source);    # open the video stream from a file a device or
+        self.cap = cv2.VideoCapture(self.input, source);    # open the video stream from a file a device or
 
         if width:
             self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
