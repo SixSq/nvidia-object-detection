@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 
-RUN apt update && apt install curl gpg nano -y && \
+RUN apt update && apt install curl iproute2 gpg nano -y && \
     curl https://packages.microsoft.com/config/debian/stretch/multiarch/prod.list > ./microsoft-prod.list && \
     cp ./microsoft-prod.list /etc/apt/sources.list.d/ && \
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
