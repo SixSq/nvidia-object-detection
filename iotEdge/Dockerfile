@@ -8,7 +8,7 @@ RUN apt update && apt install curl gpg nano -y && \
     cp ./microsoft.gpg /etc/apt/trusted.gpg.d/ && \
     apt-get update && \
     apt-get install moby-engine moby-cli -y && \
-    apt-get install iotedge
+    apt-get install iotedge -y
 
 
 EXPOSE 15580
