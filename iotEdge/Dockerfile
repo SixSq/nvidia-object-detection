@@ -17,4 +17,4 @@ EXPOSE 15581
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-CMD ["/usr/bin/lib/entrypoint.sh"]
+CMD ["/usr/local/bin/entrypoint.sh"]
