@@ -15,6 +15,7 @@ services:
       - '/dev/nvhost-ctrl-gpu:/dev/nvhost-ctrl-gpu'
       - '/dev/nvhost-prof-gpu:/dev/nvhost-prof-gpu'
       - '/dev/nvmap:/dev/nvmap'
+      - '/dev/video0:/dev/video0'
     environment:
       - LD_LIBRARY_PATH=':/usr/lib/aarch64-linux-gnu:/usr/lib/aarch64-linux-gnu/tegra:/usr/local/cuda/lib64:/usr/local/cuda/lib64:/root/opencv-3.4.1/build/lib' 
 
