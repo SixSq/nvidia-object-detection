@@ -24,6 +24,6 @@ ADD static ./static
 
 COPY ./ ./darknet
 
-# RUN ./darknetInstall.sh
+RUN ./darknet/darknetInstall.sh
 
-CMD ["./darknet/darknetInstall.sh"]
+CMD ["python3 -u app.py"]
