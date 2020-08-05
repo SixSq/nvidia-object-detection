@@ -139,7 +139,7 @@ class VideoAnalysis(object):
 
     def run_get_frame(self):
         while True:
-            time.sleep(10)
+            time.sleep(5)
             print("NEW FRAME")
             frame = self.get_frame()
             self.video_analysis_queue.put(frame.copy())
@@ -229,6 +229,7 @@ class VideoAnalysis(object):
 
         while True:
             print("PUSHING NEW IMAGE")
+            time.sleep(5)
             # image = self.request_image()
             image = cv2.imread("predictions.jpg")
             ret, jpeg = cv2.imencode('.jpg', image,

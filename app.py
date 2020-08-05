@@ -13,6 +13,31 @@ app = Flask(__name__)
 parameters = {}
 
 
+def mjpeg_generator():
+    """Video streaming generator function."""
+
+    while True:
+        frame = cv2.VideoCapture(0);    # open the video stream from a file a device or
+
+        print("PUSHING NEW IMAGE")
+        inputImage = cv2.imwrite("input.jpg",  frame)
+
+        run = ['./darknet','detect', 'cfg/yolov3-tiny.cfg', 'weights/yolov3-tiny.weights', "input.jpg"]
+        
+        prog = subprocess.run(run, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        print(prog.stdout)
+        
+        # image = self.request_image()
+        image = cv2.imread("predictions.jpg")
+        ret, jpeg = cv2.imencode('.jpg', image,
+                                (cv2.IMWRITE_JPEG_QUALITY, self.quality))
+        image = jpeg.tobytes()
+
+        yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + image + b'\r\n')
+
+
 @app.route('/')
 def index():
     """Video streaming home page which makes use of /mjpeg."""
@@ -23,18 +48,29 @@ def video():
     """Video streaming home page which makes use of /jpeg."""
     return render_template('video.html')
 
+# @app.route('/mjpeg')
+# def mjpeg():
+#     """Video streaming route. Put this in the src attribute of an img tag."""
+#     return Response(VideoAnalysis(**parameters).mjpeg_generator(),
+#                     mimetype='multipart/x-mixed-replace; boundary=frame',
+#                     direct_passthrough=True)
+
 @app.route('/mjpeg')
 def mjpeg():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(VideoAnalysis(**parameters).mjpeg_generator(),
-                    mimetype='multipart/x-mixed-replace; boundary=frame',
-                    direct_passthrough=True)
+    return Response(mjpeg_generator())
+
+
+# @app.route('/jpeg')
+# def jpeg():
+#     return Response(VideoAnalysis(**parameters).request_image(),
+#                     mimetype='image/jpeg',
+#                     direct_passthrough=True)
+
 
 @app.route('/jpeg')
 def jpeg():
-    return Response(VideoAnalysis(**parameters).request_image(),
-                    mimetype='image/jpeg',
-                    direct_passthrough=True)
+    return Response(mjpeg_generator())
 
 def get_argument_parser():
     parser = argparse.ArgumentParser(add_help=False)
