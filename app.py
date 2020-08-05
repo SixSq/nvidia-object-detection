@@ -4,7 +4,7 @@
 import os
 import sys
 import argparse
-
+import time
 from flask import Flask, render_template, Response
 from video_analysis import VideoAnalysis
 import cv2
@@ -17,8 +17,10 @@ def mjpeg_generator():
     """Video streaming generator function."""
 
     while True:
-        frame = cv2.VideoCapture(0);    # open the video stream from a file a device or
+        time.sleep(5)
+        cap = cv2.VideoCapture(0);    # open the video stream from a file a device or
 
+        frame = cap.read()
         print("PUSHING NEW IMAGE")
         inputImage = cv2.imwrite("input.jpg",  frame)
 
