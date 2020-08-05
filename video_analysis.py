@@ -228,7 +228,6 @@ class VideoAnalysis(object):
         """Video streaming generator function."""
 
         while True:
-            time.sleep(5)
             print("PUSHING NEW IMAGE")
             # image = self.request_image()
             image = cv2.imread("predictions.jpg")

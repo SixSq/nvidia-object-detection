@@ -24,6 +24,4 @@ ADD static ./static
 
 COPY ./ ./darknet
 
-# RUN ./darknetInstall.sh
-
 CMD ["./darknet/darknetInstall.sh"]
