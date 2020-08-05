@@ -7,7 +7,7 @@ import argparse
 
 from flask import Flask, render_template, Response
 from video_analysis import VideoAnalysis
-
+import cv2
 
 app = Flask(__name__)
 parameters = {}
