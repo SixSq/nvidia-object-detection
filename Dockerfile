@@ -18,7 +18,7 @@ COPY ./darknet /darknet
 
 # COPY darknetInstall.sh ./darknet
 
-COPY app.py ./darknet
+COPY app.py ./
 
 ADD templates ./templates
 
