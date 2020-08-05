@@ -9,7 +9,6 @@ from flask import Flask, render_template, Response
 from video_analysis import VideoAnalysis
 import cv2
 import subprocess
-import jpeg
 
 app = Flask(__name__)
 parameters = {}
