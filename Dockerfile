@@ -20,9 +20,9 @@ COPY ./darknet /darknet
 
 COPY app.py ./darknet
 
-ADD templates ./darknet/templates
+ADD templates ./templates
 
-ADD static ./darknet/static
+ADD static ./static
 
 # COPY ./ ./darknet
 
