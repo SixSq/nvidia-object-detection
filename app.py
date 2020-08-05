@@ -36,7 +36,7 @@ def mjpeg_generator():
         # image = self.request_image()
         image = cv2.imread("predictions.jpg")
         ret, jpeg = cv2.imencode('.jpg', image,
-                                (cv2.IMWRITE_JPEG_QUALITY, self.quality))
+                                (cv2.IMWRITE_JPEG_QUALITY, 80))
         image = jpeg.tobytes()
 
         yield (b'--frame\r\n'
