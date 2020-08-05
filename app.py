@@ -19,7 +19,13 @@ def mjpeg_generator():
 
     while True:
         time.sleep(5)
+        cap = cv2.VideoCapture(0);    # open the video stream from a file a device or
 
+        ret, frame = cap.read()
+
+        print("PUSHING NEW IMAGE")
+
+        inputImage = cv2.imwrite("input.jpg",  frame)
 
         run = ['./darknet','detect', 'cfg/yolov3-tiny.cfg', 'weights/yolov3-tiny.weights', "input.jpg"]
         
@@ -32,14 +38,6 @@ def mjpeg_generator():
         ret, jpeg = cv2.imencode('.jpg', image,
                                 (cv2.IMWRITE_JPEG_QUALITY, 80))
         image = jpeg.tobytes()
-
-        cap = cv2.VideoCapture(0);    # open the video stream from a file a device or
-
-        ret, frame = cap.read()
-
-        print("PUSHING NEW IMAGE")
-
-        inputImage = cv2.imwrite("input.jpg",  frame)
 
         yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + image + b'\r\n')
@@ -55,29 +53,29 @@ def video():
     """Video streaming home page which makes use of /jpeg."""
     return render_template('video.html')
 
-# @app.route('/mjpeg')
-# def mjpeg():
-#     """Video streaming route. Put this in the src attribute of an img tag."""
-#     return Response(VideoAnalysis(**parameters).mjpeg_generator(),
-#                     mimetype='multipart/x-mixed-replace; boundary=frame',
-#                     direct_passthrough=True)
-
 @app.route('/mjpeg')
 def mjpeg():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(mjpeg_generator())
+    return Response(VideoAnalysis(**parameters).mjpeg_generator(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame',
+                    direct_passthrough=True)
 
-
-# @app.route('/jpeg')
-# def jpeg():
-#     return Response(VideoAnalysis(**parameters).request_image(),
-#                     mimetype='image/jpeg',
-#                     direct_passthrough=True)
+# @app.route('/mjpeg')
+# def mjpeg():
+#     """Video streaming route. Put this in the src attribute of an img tag."""
+#     return Response(mjpeg_generator())
 
 
 @app.route('/jpeg')
 def jpeg():
-    return Response(mjpeg_generator())
+    return Response(VideoAnalysis(**parameters).request_image(),
+                    mimetype='image/jpeg',
+                    direct_passthrough=True)
+
+
+# @app.route('/jpeg')
+# def jpeg():
+#     return Response(mjpeg_generator())
 
 def get_argument_parser():
     parser = argparse.ArgumentParser(add_help=False)
