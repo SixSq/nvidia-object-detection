@@ -19,13 +19,7 @@ def mjpeg_generator():
 
     while True:
         time.sleep(5)
-        cap = cv2.VideoCapture(0);    # open the video stream from a file a device or
 
-        ret, frame = cap.read()
-
-        print("PUSHING NEW IMAGE")
-
-        inputImage = cv2.imwrite("input.jpg",  frame)
 
         run = ['./darknet','detect', 'cfg/yolov3-tiny.cfg', 'weights/yolov3-tiny.weights', "input.jpg"]
         
@@ -38,6 +32,14 @@ def mjpeg_generator():
         ret, jpeg = cv2.imencode('.jpg', image,
                                 (cv2.IMWRITE_JPEG_QUALITY, 80))
         image = jpeg.tobytes()
+
+        cap = cv2.VideoCapture(0);    # open the video stream from a file a device or
+
+        ret, frame = cap.read()
+
+        print("PUSHING NEW IMAGE")
+
+        inputImage = cv2.imwrite("input.jpg",  frame)
 
         yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + image + b'\r\n')
