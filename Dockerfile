@@ -10,13 +10,13 @@ RUN apt update && apt install -y python3-opencv
 
 RUN pip3 install flask imutils numpy paho-mqtt
 
-COPY ./darknet /darknet
+# COPY ./darknet /darknet
 
-# RUN git clone https://github.com/pjreddie/darknet && cd darknet && mkdir weights && cd weights && wget https://pjreddie.com/media/files/yolov3-tiny.weights
+RUN git clone https://github.com/pjreddie/darknet && cd darknet && mkdir weights && cd weights && wget https://pjreddie.com/media/files/yolov3-tiny.weights
 
-# COPY Makefile ./darknet
+COPY Makefile ./darknet
 
-# COPY darknetInstall.sh ./darknet
+COPY darknetInstall.sh ./darknet
 
 COPY app.py ./
 
@@ -24,6 +24,6 @@ ADD templates ./templates
 
 ADD static ./static
 
-# COPY ./ ./darknet
+COPY ./ ./darknet
 
 CMD ["python3", "app.py"]
