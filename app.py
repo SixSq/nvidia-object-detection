@@ -53,29 +53,29 @@ def video():
     """Video streaming home page which makes use of /jpeg."""
     return render_template('video.html')
 
-@app.route('/mjpeg')
-def mjpeg():
-    """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(VideoAnalysis(**parameters).mjpeg_generator(),
-                    mimetype='multipart/x-mixed-replace; boundary=frame',
-                    direct_passthrough=True)
-
 # @app.route('/mjpeg')
 # def mjpeg():
 #     """Video streaming route. Put this in the src attribute of an img tag."""
-#     return Response(mjpeg_generator())
+#     return Response(VideoAnalysis(**parameters).mjpeg_generator(),
+#                     mimetype='multipart/x-mixed-replace; boundary=frame',
+#                     direct_passthrough=True)
 
-
-@app.route('/jpeg')
-def jpeg():
-    return Response(VideoAnalysis(**parameters).request_image(),
-                    mimetype='image/jpeg',
-                    direct_passthrough=True)
+@app.route('/mjpeg')
+def mjpeg():
+    """Video streaming route. Put this in the src attribute of an img tag."""
+    return Response(mjpeg_generator())
 
 
 # @app.route('/jpeg')
 # def jpeg():
-#     return Response(mjpeg_generator())
+#     return Response(VideoAnalysis(**parameters).request_image(),
+#                     mimetype='image/jpeg',
+#                     direct_passthrough=True)
+
+
+@app.route('/jpeg')
+def jpeg():
+    return Response(mjpeg_generator())
 
 def get_argument_parser():
     parser = argparse.ArgumentParser(add_help=False)
@@ -92,35 +92,6 @@ def get_argument_parser():
     #parser.add_argument('-q', '--quiet', dest='quiet', help='Show less log messages. Add more to get less details.', action='count', default=0)
     return parser
 
-
-def upload():
-
-    if request.method == 'POST':
-        
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-
-        file = request.files['file']
-
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
-            run = ['./darknet/darknet','detect' ,'/darknet/cfg/yolov3-tiny.cfg', '/darknet/weights/yolov3-tiny.weights', filepath]
-            print('Starting YOLO')
-            prog = subprocess.run(run, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            prog.wait()
-            print('YOLO FINISHED')
-            print(prog)
-            return redirect(url_for('upload',
-                                    filename=filename))
-
-    return 'Not valid'
 
 def main():
     global parameters
