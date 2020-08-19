@@ -20,6 +20,12 @@ COPY darknetInstall.sh ./darknet
 
 COPY app.py ./
 
+COPY pc.py ./
+
+COPY Person.py ./
+
+COPY video_analysis.py ./
+
 ADD templates ./templates
 
 ADD static ./static
