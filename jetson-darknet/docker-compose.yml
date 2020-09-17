@@ -1,0 +1,19 @@
+version: '3.0'
+services:
+  darknet:
+    image: 'franciscomendonca/darknet-jetson-ipcam:1.0'
+    ports:
+      - "8090:8090"
+      - "8070:8070"
+    devices:
+      - '/dev/nvhost-gpu:/dev/nvhost-gpu'
+      - '/dev/nvhost-as-gpu:/dev/nvhost-as-gpu'
+      - '/dev/nvhost-ctrl:/dev/nvhost-ctrl'
+      - '/dev/nvhost-ctrl-gpu:/dev/nvhost-ctrl-gpu'
+      - '/dev/nvhost-prof-gpu:/dev/nvhost-prof-gpu'
+      - '/dev/nvmap:/dev/nvmap'
+      - '/dev/video0:/dev/video0'
+    environment:
+      - LD_LIBRARY_PATH=:/usr/lib/aarch64-linux-gnu:/usr/lib/aarch64-linux-gnu/tegra:/usr/local/cuda/lib64:/usr/local/cuda/lib64:/root/opencv-3.4.1/build/lib
+
+
