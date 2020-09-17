@@ -1,7 +1,7 @@
 version: '3.0'
 services:
   darknet:
-    image: 'franciscomendonca/darknet-jetson-ipcam:1.0'
+    image: 'sixsq/darknet-object-detection:1.0'
     ports:
       - "8090:8090"
       - "8070:8070"
